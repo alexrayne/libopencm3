@@ -667,6 +667,8 @@ enum rcc_osc {
 };
 
 #define _REG_BIT(base, bit)		(((base) << 5) + (bit))
+#define _RCC_REG(i)		MMIO32(RCC_BASE + ((i) >> 5))
+#define _RCC_BIT(i)		(1 << ((i) & 0x1f))
 
 enum rcc_periph_clken {
 	/* AHB1 peripherals*/

@@ -43,8 +43,33 @@ void rcc_peripheral_disable_clock(volatile uint32_t *reg, uint32_t en);
 void rcc_peripheral_reset(volatile uint32_t *reg, uint32_t reset);
 void rcc_peripheral_clear_reset(volatile uint32_t *reg, uint32_t clear_reset);
 
-void rcc_periph_clock_enable(enum rcc_periph_clken clken);
-void rcc_periph_clock_disable(enum rcc_periph_clken clken);
+/** @brief Enable Peripheral Clock in running mode.
+ *
+ * Enable the clock on particular peripheral.
+ *
+ * @param[in] clken rcc_periph_clken Peripheral RCC
+ *
+ * For available constants, see #rcc_periph_clken (RCC_UART1 for example)
+ */
+static inline
+void rcc_periph_clock_enable(enum rcc_periph_clken clken)
+{
+	_RCC_REG(clken) |= _RCC_BIT(clken);
+}
+
+/** @brief Disable Peripheral Clock in running mode.
+ * Disable the clock on particular peripheral.
+ *
+ * @param[in] clken rcc_periph_clken Peripheral RCC
+ *
+ * For available constants, see #rcc_periph_clken (RCC_UART1 for example)
+ */
+static inline
+void rcc_periph_clock_disable(enum rcc_periph_clken clken)
+{
+	_RCC_REG(clken) &= ~_RCC_BIT(clken);
+}
+
 void rcc_periph_reset_pulse(enum rcc_periph_rst rst);
 void rcc_periph_reset_hold(enum rcc_periph_rst rst);
 void rcc_periph_reset_release(enum rcc_periph_rst rst);
